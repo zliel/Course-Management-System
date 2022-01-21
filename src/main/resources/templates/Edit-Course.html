@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Course</title>
+    <link rel="stylesheet" th:href="@{/styles/CoursesPage.css}"/>
+
+</head>
+    <header>
+        <nav class="navBarContainer">
+            <ul class="navBar">
+                <li><a href="/" class="navBarLink">Home</a></li>
+                <li><a href="/allcourses" class="currentEndpoint navBarLink">All Courses</a></li>
+                <li><a href="" class="navBarLink">Login (WIP)</a></li>
+            </ul>
+        </nav>
+    </header>
+    <body>
+        <h2>Old Course Values</h2>
+        <table class="steelBlueCols">
+            <thead>
+            <tr>
+                <th>ID</th><th>Name</th><th>Start Date</th><th>End Date</th><th>Max Capacity</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="course: ${course}">
+                <td th:text="${course.id}"/>
+                <td th:text="${course.courseName}"/>
+                <td th:text="${#dates.format(course.startDate, 'dd-MM-yyyy')}"/>
+                <td th:text="${#dates.format(course.endDate, 'dd-MM-yyyy')}"/>
+                <td th:text="${course.maxStudents}"/>
+            </tr>
+            </tbody>
+        </table>
+
+        <br>
+
+        <h2>New Course Values</h2>
+        <form method="post" th:action="@{/courses/new}" th:object="${course}">
+            <label for="name">Course Name: </label> <input type="text" th:field="*{courseName}" id="name" required/>
+            <br>
+            <label for="startDate">Start Date: </label> <input type="date" th:field="*{startDate}" id="startDate" required/>
+            <br>
+            <label for="endDate">End Date: </label> <input type="date" th:field="*{endDate}" id="endDate" required/>
+            <br>
+            <label for="maxCapacity">Max Capacity: </label> <input type="number" th:field="*{maxStudents}" id="maxCapacity" required min="1">
+            <br>
+            <input type="hidden" th:field="*{id}" th:value="${course.id}" />
+            <input type="submit" value="Submit!" class="action-button" style="background-color: #88D5E9; border-color: lightseagreen"/>
+        </form>
+
+    </body>
+</html>
