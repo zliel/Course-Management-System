@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Login</title>
+        <link rel="stylesheet" th:href="@{/styles/CoursesPage.css}"/>
+    </head>
+
+    <body>
+        <header>
+            <img th:src="@{/images/logo.png}" alt="A-plus logo">
+            <nav class="navBarContainer">
+                <ul class="navBar">
+                    <li><a href="/" class="navBarLink">Home</a></li>
+                    <li><a href="/allcourses" class="navBarLink">All Courses</a></li>
+                    <li><a href="/login" class="currentEndpoint navBarLink">Login (WIP)</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <h1 style="color: #BEBEBE">WIP</h1>
+            <h3 style="color: #BEBEBE">This page is under construction, check back again soon!</h3>
+            <br>
+            <a href="/allcourses" style="color: rgb(58, 245, 65);">In the meantime, you can click here to go to a list of all the available courses!</a>
+
+            <form method="post" th:action="@{/login}" ><!--th:object="${user}"-->
+
+                <input type="submit" value="Submit!" class="action-button" style="background-color: #88D5E9; border-color: lightseagreen"/>
+            </form>
+        </main>
+    </body>
+</html>
