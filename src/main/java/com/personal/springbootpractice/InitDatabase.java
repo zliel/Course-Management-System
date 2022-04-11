@@ -16,8 +16,6 @@ public class InitDatabase {
     @Bean
     public CommandLineRunner initialize(MongoOperations ops) {
         return args -> {
-            //ops.dropCollection(Course.class);
-
             ops.insert(new Course("Newly Made Course!", new Date(), Date.from(Instant.now().plus(90, ChronoUnit.DAYS)), 30));
             ops.insert(new Course( "Newly Made Course 2.0!", new Date(), Date.from(Instant.now().plus(90, ChronoUnit.DAYS)), 30));
             ops.insert(new Course("This is an old course lol!", new Date(), Date.from(Instant.now().plus(90, ChronoUnit.DAYS)), 30));
