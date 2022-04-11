@@ -11,7 +11,7 @@
             <ul class="navBar">
                 <li><a href="/" class="navBarLink">Home</a></li>
                 <li><a href="/allcourses" class="currentEndpoint navBarLink">All Courses</a></li>
-                <li><a href="/login" class="navBarLink">Login (WIP)</a></li>
+                <li><a href="/login" class="navBarLink">Login</a></li>
             </ul>
         </nav>
     </header>
@@ -27,7 +27,7 @@
             <tbody>
             <tr th:each="course: ${course}">
                 <td th:text="${course.id}"/>
-                <td th:text="${course.courseName}"/>
+                <td th:text="${course.name}"/>
                 <td th:text="${#dates.format(course.startDate, 'dd-MM-yyyy')}"/>
                 <td th:text="${#dates.format(course.endDate, 'dd-MM-yyyy')}"/>
                 <td th:text="${course.maxStudents}"/>
@@ -39,7 +39,7 @@
 
         <h2>New Course Values</h2>
         <form method="post" th:action="@{/courses/new}" th:object="${course}">
-            <label for="name">Course Name: </label> <input type="text" th:field="*{courseName}" id="name" required/>
+            <label for="name">Course Name: </label> <input type="text" th:field="*{name}" id="name" required/>
             <br>
             <label for="startDate">Start Date: </label> <input type="date" th:field="*{startDate}" id="startDate" required/>
             <br>
