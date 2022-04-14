@@ -1,9 +1,11 @@
 package com.personal.springbootpractice.repositories;
 
-import com.personal.springbootpractice.models.Course;
+import com.personal.springbootpractice.models.User;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
+import org.springframework.security.core.userdetails.UserDetails;
 import reactor.core.publisher.Mono;
 
-public interface UserRepository extends ReactiveCrudRepository<Course, Long> {
-    Mono<Course> findById(String id);
+public interface UserRepository extends ReactiveCrudRepository<User, Long> {
+    Mono<UserDetails> findByUsername(String username);
+
 }
