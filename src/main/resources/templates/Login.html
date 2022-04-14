@@ -19,13 +19,12 @@
         </header>
 
         <main>
-            <h1 style="color: #BEBEBE">WIP</h1>
-            <h3 style="color: #BEBEBE">This page is under construction, check back again soon!</h3>
-            <br>
-            <a href="/allcourses" style="color: rgb(58, 245, 65);">In the meantime, you can click here to go to a list of all the available courses!</a>
-
-            <form method="post" th:action="@{/login}" ><!--th:object="${user}"-->
-
+            <h1>Log In</h1>
+            <form method="post" th:action="@{/login}" >
+                <label for="username">Username: </label> <input type="text" id="username" name="username" required/>
+                <br>
+                <label for="password">Password: </label> <input type="password" id="password" name="password" required>
+                <br>
                 <input type="submit" value="Submit!" class="action-button" style="background-color: #88D5E9; border-color: lightseagreen"/>
             </form>
         </main>
