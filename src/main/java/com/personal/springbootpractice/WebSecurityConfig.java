@@ -31,12 +31,10 @@ public class WebSecurityConfig {
                 .permitAll()
                 .and()
             .formLogin()
-                .and()
-            .logout();
+                .loginPage("/login");
 
         return http.build();
     }
-
 
     @Bean
     public ReactiveUserDetailsService userDetailsService() {
