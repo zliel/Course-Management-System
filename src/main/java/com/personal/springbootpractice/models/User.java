@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,6 +21,7 @@ public class User implements UserDetails {
 
     @Id
     private String username;
+    @Indexed(unique = true)
     private String password;
     private String schoolName;
 
@@ -31,6 +33,10 @@ public class User implements UserDetails {
         this.username = username;
         this.password = password;
         this.schoolName = schoolName;
+        this.roles.add(new SimpleGrantedAuthority("ROLE_USER"));
+    }
+
+    public User() {
         this.roles.add(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
