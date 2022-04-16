@@ -19,7 +19,7 @@ public class WebSecurityConfig {
     @Bean
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
         http.authorizeExchange()
-                .pathMatchers("/courses/delete/**", "/courses/edit/**")
+                .pathMatchers("/courses/delete/**", "/courses/edit/**", "/users/delete/**")
                 .hasRole("ADMIN")
                 .and()
             .authorizeExchange()
@@ -38,6 +38,6 @@ public class WebSecurityConfig {
 
     @Bean
     public ReactiveUserDetailsService userDetailsService() {
-        return (username) -> userRepository.findByUsername(username);
+        return (username) -> userRepository.findUserDetailsByUsername(username);
     }
 }
