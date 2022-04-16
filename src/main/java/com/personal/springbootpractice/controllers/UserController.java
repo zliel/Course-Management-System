@@ -3,7 +3,9 @@ package com.personal.springbootpractice.controllers;
 import com.personal.springbootpractice.models.User;
 import com.personal.springbootpractice.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.ReactiveSecurityContextHolder;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,13 +21,20 @@ public class UserController {
     UserRepository userRepository;
 
     @Autowired
-    PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    PasswordEncoder passwordEncoder;
 
     @GetMapping("/signup")
     public Mono<String> signup(Model model) {
         model.addAttribute("user", new User());
-        return Mono.just("Signup");
+        return ReactiveSecurityContextHolder.getContext()
+                .map(SecurityContext::getAuthentication)
+                .map(Authentication::isAuthenticated)
+                .flatMap(loggedIn -> {
+                    if(loggedIn) { return Mono.just("redirect:/"); }
+                    return Mono.just("Signup");
+                });
     }
+
 
     @PostMapping("/users/new")
     public Mono<String> createNewUser(@ModelAttribute(value="user") User newUser) {
