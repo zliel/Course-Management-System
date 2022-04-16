@@ -3,6 +3,7 @@ package com.personal.springbootpractice.models;
 import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -20,6 +21,8 @@ import java.util.Set;
 public class User implements UserDetails {
 
     @Id
+    private String id;
+    @Indexed(unique = true)
     private String username;
     @Indexed(unique = true)
     private String password;
@@ -30,6 +33,7 @@ public class User implements UserDetails {
 
     @Builder
     public User(String username, String password, String schoolName) {
+        this.id = new ObjectId().toString();
         this.username = username;
         this.password = password;
         this.schoolName = schoolName;
@@ -37,6 +41,7 @@ public class User implements UserDetails {
     }
 
     public User() {
+        this.id = new ObjectId().toString();
         this.roles.add(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
