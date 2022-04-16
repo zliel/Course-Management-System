@@ -2,11 +2,11 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Courses</title>
+    <title>Sign Up</title>
     <link rel="stylesheet" th:href="@{/styles/CoursesPage.css}"/>
 </head>
 <body>
-<h2>Create a new Course</h2>
+<h2>Sign Up</h2>
 <form method="post" th:action="@{/users/new}" th:object="${user}">
     <label for="username">Username: </label> <input type="text" th:field="*{username}" id="username" required/>
     <br>
