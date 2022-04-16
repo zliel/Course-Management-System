@@ -6,6 +6,17 @@
         <link rel="stylesheet" th:href="@{/styles/CoursesPage.css}"/>
     </head>
     <body>
+        <header>
+            <img th:src="@{/images/logo.png}" alt="A-plus logo">
+            <nav class="navBarContainer">
+                <ul class="navBar">
+                    <li><a href="/" class="navBarLink">Home</a></li>
+                    <li><a href="/allcourses" class="navBarLink">All Courses</a></li>
+                    <li><a href="/login" class="currentEndpoint navBarLink">Login</a></li>
+                    <li><a href="/signup" class="navBarLink">Sign Up</a></li>
+                </ul>
+            </nav>
+        </header>
         <h2>Enter the username of the user to delete</h2>
         <form method="post" th:action="@{/users/delete/}" th:object="${user}" >
             <label for="username">Username: </label> <input type="text" th:field="*{username}" id="username" required/>
