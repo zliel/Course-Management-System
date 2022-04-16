@@ -38,4 +38,16 @@ public class UserController {
         });
 
     }
+
+    @GetMapping("/users/delete")
+    public Mono<String> userDeletionPage(Model model) {
+        model.addAttribute("user", new User());
+        return Mono.just("user-delete");
+    }
+
+    @PostMapping("/users/delete/")
+    public Mono<String> deleteUser(@ModelAttribute(value="user") User user) {
+        String username = user.getUsername();
+        return userRepository.findUserByUsername(username).flatMap(userRepository::delete).then(Mono.just("redirect:/"));
+    }
 }
