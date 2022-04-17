@@ -2,6 +2,7 @@ package com.personal.springbootpractice.controllers;
 
 import com.personal.springbootpractice.models.User;
 import com.personal.springbootpractice.repositories.UserRepository;
+import com.personal.springbootpractice.util.AuthenticationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.ReactiveSecurityContextHolder;
@@ -26,13 +27,7 @@ public class UserController {
     @GetMapping("/signup")
     public Mono<String> signup(Model model) {
         model.addAttribute("user", new User());
-        return ReactiveSecurityContextHolder.getContext()
-                .map(SecurityContext::getAuthentication)
-                .map(Authentication::isAuthenticated)
-                .flatMap(loggedIn -> {
-                    if(loggedIn) { return Mono.just("redirect:/"); }
-                    return Mono.just("Signup");
-                });
+        return AuthenticationUtils.authenticateEndpoint("Signup");
     }
 
 
@@ -45,7 +40,6 @@ public class UserController {
                     if(userExists) return Mono.just("redirect:/");
                     return userRepository.save(newUser).then(Mono.just("redirect:/login"));
         });
-
     }
 
     @GetMapping("/users/delete")
