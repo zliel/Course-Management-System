@@ -9,12 +9,15 @@
         <header>
             <img th:src="@{/images/logo.png}" alt="A-plus logo">
             <nav class="navBarContainer">
-                <ul class="navBar">
+                <ul class="navBar" th:object="${isAuthenticated}">
                     <li><a href="/" class="currentEndpoint navBarLink">Home</a></li>
                     <li><a href="/allcourses" class="navBarLink">All Courses</a></li>
-                    <li th:if="${isAuthenticated == false}" th:object="${isAuthenticated}">
-                        <a href="/login" class="navBarLink">Login</a>
-                        <a href="/signup" class="navBarLink">Sign Up</a>
+                    <li th:unless="${isAuthenticated}"><a href="/login" class="navBarLink">Login</a></li>
+                    <li th:unless="${isAuthenticated}"><a href="/signup" class="navBarLink">Sign Up</a></li>
+                    <li th:if="${isAuthenticated}">
+                        <form th:action="@{/logout}" method="post">
+                            <button type="submit" style="background: none; border: none;" class="navBarLink">Log Out</button>
+                        </form>
                     </li>
                 </ul>
             </nav>
