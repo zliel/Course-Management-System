@@ -24,7 +24,6 @@ public class AuthenticationUtils {
                 .map(SecurityContext::getAuthentication)
                 .map(Authentication::isAuthenticated)
                 .flatMap(auth -> {
-                    System.out.println(auth);
                     if(auth) return Mono.just(true);
                     return Mono.just(false);
                 });
