@@ -2,6 +2,7 @@ package com.personal.springbootpractice.controllers;
 
 import com.personal.springbootpractice.models.Course;
 import com.personal.springbootpractice.repositories.CourseRepository;
+import com.personal.springbootpractice.util.AuthenticationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +29,7 @@ public class CourseController {
      */
     @GetMapping("/allcourses")
     public Mono<String> allCourses(Model model) {
+        model.addAttribute("isAuthenticated", AuthenticationUtils.isAuthenticated());
         model.addAttribute("courses", repository.findAll().sort());
         model.addAttribute("course", new Course());
         return Mono.just("Courses");

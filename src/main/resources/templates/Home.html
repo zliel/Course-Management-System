@@ -12,8 +12,10 @@
                 <ul class="navBar">
                     <li><a href="/" class="currentEndpoint navBarLink">Home</a></li>
                     <li><a href="/allcourses" class="navBarLink">All Courses</a></li>
-                    <li><a href="/login" class="navBarLink">Login</a></li>
-                    <li><a href="/signup" class="navBarLink">Sign Up</a></li>
+                    <li th:if="${isAuthenticated == false}" th:object="${isAuthenticated}">
+                        <a href="/login" class="navBarLink">Login</a>
+                        <a href="/signup" class="navBarLink">Sign Up</a>
+                    </li>
                 </ul>
             </nav>
         </header>

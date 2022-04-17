@@ -23,6 +23,7 @@ public class UserController {
 
     @GetMapping("/signup")
     public Mono<String> signup(Model model) {
+        model.addAttribute("isAuthenticated", AuthenticationUtils.isAuthenticated());
         model.addAttribute("user", new User());
         return AuthenticationUtils.authenticateEndpoint("Signup");
     }
@@ -48,6 +49,8 @@ public class UserController {
     @PostMapping("/users/delete/")
     public Mono<String> deleteUser(@ModelAttribute(value="user") User user) {
         String username = user.getUsername();
-        return userRepository.findUserByUsername(username).flatMap(userRepository::delete).then(Mono.just("redirect:/"));
+        return userRepository.findUserByUsername(username)
+                .flatMap(userRepository::delete)
+                .then(Mono.just("redirect:/"));
     }
 }
