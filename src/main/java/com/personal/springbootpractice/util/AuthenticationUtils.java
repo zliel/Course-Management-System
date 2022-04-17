@@ -18,4 +18,15 @@ public class AuthenticationUtils {
                     return Mono.just(requestedEndpoint);
                 });
     }
+
+    public static Mono<Boolean> isAuthenticated() {
+        return ReactiveSecurityContextHolder.getContext()
+                .map(SecurityContext::getAuthentication)
+                .map(Authentication::isAuthenticated)
+                .flatMap(auth -> {
+                    System.out.println(auth);
+                    if(auth) return Mono.just(true);
+                    return Mono.just(false);
+                });
+    }
 }
