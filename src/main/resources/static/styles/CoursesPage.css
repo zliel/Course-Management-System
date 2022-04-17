@@ -14,7 +14,7 @@ header {
 }
 
 header img {
-    max-height: 60px;
+    max-height: 40px;
     height: 95%;
     padding-left: 10px;
 }
@@ -22,7 +22,7 @@ header img {
 ul.navBar {
     max-height: 20%;
     list-style-type: none;
-    /*margin: 0;*/
+    margin: 0;
     /*padding: 1em .2em;*/
     padding: .2em;
 }
@@ -36,7 +36,21 @@ li {
     color: rgb(129, 209, 238);
     /*padding: .2em .5em;*/
     text-decoration: none;
-    font-size: larger;
+    transition: 0.3s;
+    font: 15px "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+li>form {
+    font-size: 15px;
+    display: inline;
+    padding: 0;
+}
+
+button.navBarLink {
+    color: rgb(129, 209, 238);
+    /*padding: .2em .5em;*/
+    text-decoration: none;
+    font-size: 1em;
     transition: 0.3s;
 }
 
