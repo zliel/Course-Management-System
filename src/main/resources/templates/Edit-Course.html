@@ -7,6 +7,7 @@
     </head>
     <body>
         <header>
+            <img th:src="@{/images/logo.png}" alt="A-plus logo">
             <nav class="navBarContainer">
                 <ul class="navBar" th:object="${isAuthenticated}">
                     <li><a href="/" class="navBarLink">Home</a></li>
