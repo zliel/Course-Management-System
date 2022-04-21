@@ -8,9 +8,14 @@
     <body>
         <header>
             <nav class="navBarContainer">
-                <ul class="navBar">
+                <ul class="navBar" th:object="${isAuthenticated}">
                     <li><a href="/" class="navBarLink">Home</a></li>
                     <li><a href="/allcourses" class="currentEndpoint navBarLink">All Courses</a></li>
+                    <li th:if="${isAuthenticated}">
+                        <form th:action="@{/logout}" method="post">
+                            <button type="submit" style="background: none; border: none;" class="navBarLink">Log Out</button>
+                        </form>
+                    </li>
                 </ul>
             </nav>
         </header>

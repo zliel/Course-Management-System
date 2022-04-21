@@ -61,6 +61,7 @@ public class CourseController {
     public Mono<String> editCourse(@PathVariable("id") String id, Model model) {
         Mono<Course> courseToEdit = repository.findById(id);
         model.addAttribute("course", courseToEdit);
+        model.addAttribute("isAuthenticated", AuthenticationUtils.isAuthenticated());
 
         return Mono.just("edit-course");
     }
