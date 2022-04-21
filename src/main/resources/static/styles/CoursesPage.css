@@ -23,7 +23,6 @@ ul.navBar {
     max-height: 20%;
     list-style-type: none;
     margin: 0;
-    /*padding: 1em .2em;*/
     padding: .2em;
 }
 
@@ -34,7 +33,6 @@ li {
 
 .navBarLink {
     color: rgb(129, 209, 238);
-    /*padding: .2em .5em;*/
     text-decoration: none;
     transition: 0.3s;
     font: 15px "Lucida Sans Unicode", "Lucida Grande", sans-serif;
@@ -48,9 +46,9 @@ li>form {
 
 button.navBarLink {
     color: rgb(129, 209, 238);
-    /*padding: .2em .5em;*/
     text-decoration: none;
-    font-size: 1em;
+    font-size: 1.03em;
+    padding: 0;
     transition: 0.3s;
 }
 
