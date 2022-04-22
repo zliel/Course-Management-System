@@ -2,9 +2,9 @@ package com.personal.springbootpractice.controllers;
 
 import com.personal.springbootpractice.models.Course;
 import com.personal.springbootpractice.repositories.CourseRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Flux;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
 import java.time.Instant;
@@ -14,8 +14,11 @@ import java.util.Date;
 @RestController
 public class CourseRestController {
 
-    @Autowired
-    CourseRepository repository;
+    final CourseRepository repository;
+
+    public CourseRestController(CourseRepository repository) {
+        this.repository = repository;
+    }
 
     @GetMapping("/api/courses/{id}")
     public Mono<Course> getCourse(@PathVariable("id") Long id) {

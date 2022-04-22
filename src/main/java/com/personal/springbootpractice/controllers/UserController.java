@@ -1,9 +1,9 @@
 package com.personal.springbootpractice.controllers;
 
 import com.personal.springbootpractice.models.User;
+import com.personal.springbootpractice.repositories.SchoolRepository;
 import com.personal.springbootpractice.repositories.UserRepository;
 import com.personal.springbootpractice.util.AuthenticationUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,11 +15,16 @@ import reactor.core.publisher.Mono;
 @Controller
 public class UserController {
 
-    @Autowired
-    UserRepository userRepository;
+    final UserRepository userRepository;
+    final SchoolRepository schoolRepository;
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
+    final PasswordEncoder passwordEncoder;
+
+    public UserController(UserRepository userRepository, SchoolRepository schoolRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.schoolRepository = schoolRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @GetMapping("/signup")
     public Mono<String> signup(Model model) {
