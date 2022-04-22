@@ -13,8 +13,11 @@ import java.util.ArrayList;
 @Component
 public class Cleanup {
 
-    @Autowired
-    MongoOperations ops;
+    final MongoOperations ops;
+
+    public Cleanup(MongoOperations ops) {
+        this.ops = ops;
+    }
 
     @PreDestroy
     public void cleanDB() {
