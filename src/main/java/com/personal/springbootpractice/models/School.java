@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 @Data
-public class School {
+public class School implements Comparable<School>{
 
     @Id
     public String id;
@@ -19,4 +19,9 @@ public class School {
     }
 
     public School() { }
+
+    @Override
+    public int compareTo(School o) {
+        return this.id.compareTo(o.id);
+    }
 }
