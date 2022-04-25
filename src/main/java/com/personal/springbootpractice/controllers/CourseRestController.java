@@ -29,7 +29,7 @@ public class CourseRestController {
     // This would be changed to a POST mapping
     @GetMapping("/api/courses/new/{id}")
     public Mono<String> addNewCourse(@PathVariable("id") Long id) {
-        Course courseToAdd = new Course("Newly Made Course!", new Date(), Date.from(Instant.now().plus(90, ChronoUnit.DAYS)), 30);
+        Course courseToAdd = new Course("Newly Made Course!", new Date(), Date.from(Instant.now().plus(90, ChronoUnit.DAYS)), 30, "UCSD");
 
         return repository.save(courseToAdd).then(Mono.just("Success!"));
     }
