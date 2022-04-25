@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Delete A Course</title>
+        <link rel="stylesheet" th:href="@{/styles/CoursesPage.css}"/>
+    </head>
+    <body>
+        <header>
+            <img th:src="@{/images/logo.png}" alt="A-plus logo">
+            <nav class="navBarContainer">
+                <ul class="navBar">
+                    <li><a href="/" class="navBarLink">Home</a></li>
+                    <li><a href="/allcourses" class="navBarLink">All Courses</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <h2>Select Which School To Remove</h2>
+            <form method="post" th:action="@{/schools/delete}" th:object="${schoolModel}">
+                <label for="schoolName">School Name: </label>
+                <select id="schoolName" th:field="*{id}">
+                    <option th:each="school : ${schools}" th:value="${school.id}" th:text="${school.name}"></option>
+                </select>
+                <br><br>
+                <input type="submit" value="Delete" class="action-button" style="background-color: #e2452b"/>
+            </form>
+        </main>
+    </body>
+</html>
