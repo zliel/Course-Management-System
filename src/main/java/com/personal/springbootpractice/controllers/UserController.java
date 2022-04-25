@@ -30,6 +30,7 @@ public class UserController {
     public Mono<String> signup(Model model) {
         model.addAttribute("isAuthenticated", AuthenticationUtils.isAuthenticated());
         model.addAttribute("user", new User());
+        model.addAttribute("schools", schoolRepository.findAll().sort());
         return AuthenticationUtils.authenticateEndpoint("Signup");
     }
 
