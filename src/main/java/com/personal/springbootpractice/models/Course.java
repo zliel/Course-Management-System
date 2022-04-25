@@ -20,15 +20,17 @@ public class Course implements Comparable<Course> {
     private Date startDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date endDate;
+    private String schoolName;
     
     private int maxStudents;
 
-    public Course(String courseName, Date startDate, Date endDate, int maxStudents) {
+    public Course(String courseName, Date startDate, Date endDate, int maxStudents, String schoolName) {
         this.id = new ObjectId().toString();
         this.name = courseName;
         this.startDate = startDate;
         this.endDate = endDate;
         this.maxStudents = maxStudents;
+        this.schoolName = schoolName;
     }
 
     public Course() {
