@@ -23,10 +23,16 @@
                 <br>
                 <label for="password">Password: </label> <input type="password" th:field="*{password}" id="password" required/>
                 <br>
-                <label for="schoolName">School Name: </label> <input type="text" th:field="*{schoolName}" id="schoolName" required/>
-                <br>
+                <label for="schoolName">School Name: </label>
+                <select id="schoolName" th:field="*{schoolName}">
+                    <option th:each="school : ${schools}" th:value="${school.id}" th:text="${school.name}"></option>
+                </select>
+                <br><br>
                 <input type="submit" value="Submit!" class="action-button" style="background-color: #88D5E9; border-color: lightseagreen"/>
             </form>
+
+            <h4>Don't see your school in the list?</h4>
+            <a th:href="@{/schools/new}">Click this link to add a new school to the list!</a>
         </main>
     </body>
 </html>
