@@ -28,4 +28,16 @@ public class SchoolController {
     public Mono<String> createNewSchool(@ModelAttribute(value="school") School newSchool) {
         return repository.save(newSchool).then(Mono.just("redirect:/signup"));
     }
+
+    @GetMapping("schools/delete")
+    public Mono<String> deleteSchool(Model model) {
+        model.addAttribute("schoolModel", new School());
+        model.addAttribute("schools", repository.findAll().sort());
+        return Mono.just("Delete-School");
+    }
+
+    @PostMapping("schools/delete")
+    public Mono<String> deleteSchool(@ModelAttribute(value="schoolModel") School school) {
+        return repository.deleteById(school.getId()).then(Mono.just("redirect:/schools/delete"));
+    }
 }
