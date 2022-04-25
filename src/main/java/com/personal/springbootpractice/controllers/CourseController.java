@@ -1,8 +1,10 @@
 package com.personal.springbootpractice.controllers;
 
 import com.personal.springbootpractice.models.Course;
+import com.personal.springbootpractice.models.User;
 import com.personal.springbootpractice.repositories.CourseRepository;
 import com.personal.springbootpractice.util.AuthenticationUtils;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,9 +35,10 @@ public class CourseController {
      * @return A string containing the name of the corresponding HTML file to which the user will be sent to
      */
     @GetMapping("/allcourses")
-    public Mono<String> allCourses(Model model) {
+    public Mono<String> allCourses(Model model, @AuthenticationPrincipal User user) {
+
         model.addAttribute("isAuthenticated", AuthenticationUtils.isAuthenticated());
-        model.addAttribute("courses", repository.findAll().sort());
+        model.addAttribute("courses", repository.findAllBySchoolName(user.getSchoolName()).sort());
         model.addAttribute("course", new Course());
         return Mono.just("Courses");
     }
@@ -46,7 +49,8 @@ public class CourseController {
      * @return A redirect to the "/allcourses" page
      */
     @PostMapping("/courses/new")
-    public Mono<String> newCourse(@ModelAttribute(value="course") Course course) {
+    public Mono<String> newCourse(@ModelAttribute(value="course") Course course, @AuthenticationPrincipal User user) {
+        course.setSchoolName(user.getSchoolName());
         System.out.println(course);
         // Solution to the issue of getting form data from POST form: https://stackoverflow.com/questions/17669212/send-datas-from-html-to-controller-in-thymeleaf
         // Solution to the date type mismatch error: https://stackoverflow.com/questions/53188464/spring-boot-date-conversion-from-form
