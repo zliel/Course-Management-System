@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add A New School</title>
+    <link rel="stylesheet" th:href="@{/styles/CoursesPage.css}"/>
+</head>
+<body>
+<header>
+    <img th:src="@{/images/logo.png}" alt="A-plus logo">
+    <nav class="navBarContainer">
+        <ul class="navBar">
+            <li><a href="/" class="navBarLink">Home</a></li>
+            <li><a href="/allcourses" class="navBarLink">All Courses</a></li>
+            <li><a href="/login" class="navBarLink">Login</a></li>
+        </ul>
+    </nav>
+</header>
+<main>
+    <h2>Add A New School</h2>
+    <form method="post" th:action="@{/schools/new}" th:object="${school}">
+        <label for="schoolName">School Name: </label> <input type="text" th:field="*{name}" id="schoolName" required/>
+        <br>
+        <input type="submit" value="Submit!" class="action-button" style="background-color: #88D5E9; border-color: lightseagreen"/>
+    </form>
+</main>
+</body>
+</html>

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
-        <title>Sign Up</title>
+        <title>Delete A Course</title>
         <link rel="stylesheet" th:href="@{/styles/CoursesPage.css}"/>
     </head>
     <body>
@@ -12,27 +12,19 @@
                 <ul class="navBar">
                     <li><a href="/" class="navBarLink">Home</a></li>
                     <li><a href="/allcourses" class="navBarLink">All Courses</a></li>
-                    <li><a href="/login" class="navBarLink">Login</a></li>
                 </ul>
             </nav>
         </header>
         <main>
-            <h2>Sign Up</h2>
-            <form method="post" th:action="@{/users/new}" th:object="${user}">
-                <label for="username">Username: </label> <input type="text" th:field="*{username}" id="username" required/>
-                <br>
-                <label for="password">Password: </label> <input type="password" th:field="*{password}" id="password" required/>
-                <br>
+            <h2>Select Which School To Remove</h2>
+            <form method="post" th:action="@{/schools/delete}" th:object="${schoolModel}">
                 <label for="schoolName">School Name: </label>
-                <select id="schoolName" th:field="*{schoolName}">
+                <select id="schoolName" th:field="*{id}">
                     <option th:each="school : ${schools}" th:value="${school.id}" th:text="${school.name}"></option>
                 </select>
                 <br><br>
-                <input type="submit" value="Submit!" class="action-button" style="background-color: #88D5E9; border-color: lightseagreen"/>
+                <input type="submit" value="Delete" class="action-button" style="background-color: #e2452b"/>
             </form>
-
-            <h4>Don't see your school in the list?</h4>
-            <a th:href="@{/schools/new}">Click this link to add a new school to the list!</a>
         </main>
     </body>
 </html>
