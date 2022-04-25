@@ -27,7 +27,7 @@ public class WebSecurityConfig {
                 .hasAnyRole("USER", "ADMIN")
                 .and()
             .authorizeExchange()
-                .pathMatchers("/", "/login", "/signup", "/users/new", "/styles/**", "/images/**")
+                .pathMatchers("/", "/login", "/signup", "/users/new", "/schools/new", "/styles/**", "/images/**")
                 .permitAll()
                 .and()
             .formLogin()
