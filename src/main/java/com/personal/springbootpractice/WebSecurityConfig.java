@@ -19,7 +19,7 @@ public class WebSecurityConfig {
     @Bean
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
         http.authorizeExchange()
-                .pathMatchers("/courses/delete/**", "/courses/edit/**", "/courses/new/**", "/users/delete/**", "users/delete")
+                .pathMatchers("/courses/delete/**", "/courses/edit/**", "/courses/new/**", "/users/delete/**", "/users/delete", "/schools/delete", "/schools/delete/**")
                 .hasRole("ADMIN")
                 .and()
             .authorizeExchange()
