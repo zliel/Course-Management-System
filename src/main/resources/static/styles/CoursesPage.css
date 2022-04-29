@@ -36,6 +36,7 @@ li {
     text-decoration: none;
     transition: 0.3s;
     font: 15px "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    border-bottom: 0 solid;
 }
 
 li>form {
@@ -50,15 +51,19 @@ button.navBarLink {
     font-size: 1.03em;
     padding: 0;
     transition: 0.3s;
+    border-bottom: 0 solid;
 }
 
 .currentEndpoint {
     color: rgb(58, 245, 65);
     transition: 0.3s;
+    border-bottom: 1px solid;
 }
 
 .navBarLink:hover, .currentEndpoint:hover {
     color: rgb(114, 255, 255);
+    border-bottom: 1px solid rgb(129, 209, 238) !important;
+
 }
 
 main {
