@@ -2,45 +2,44 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
       <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <title>Courses</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/styles/CoursesPage.css}"/>
   </head>
   <body>
-    <header>
-      <img th:src="@{/images/logo.png}" alt="A-plus logo">
-      <nav class="navBarContainer">
-        <ul class="navBar" th:object="${isAuthenticated}">
-          <li><a href="/" class="navBarLink">Home</a></li>
-          <li><a href="/allcourses" class="currentEndpoint navBarLink">All Courses</a></li>
-          <li th:unless="${isAuthenticated}"><a href="/login" class="navBarLink">Login</a></li>
-          <li th:unless="${isAuthenticated}"><a href="/signup" class="navBarLink">Sign Up</a></li>
-          <li th:if="${isAuthenticated}">
-            <form th:action="@{/logout}" method="post">
-              <button type="submit" style="background: none; border: none;" class="navBarLink">Log Out</button>
+    <header class="bg-dark">
+      <img th:src="@{/images/logo.png}" alt="A-plus logo" class="img-fluid align-self-center">
+      <nav class="nav container-fluid justify-content-center" th:object="${isAuthenticated}">
+          <a href="/" class="navBarLink nav-link link-primary">Home</a>
+          <a href="/allcourses" class="currentEndpoint navBarLink nav-link link-primary">All Courses</a>
+          <a th:unless="${isAuthenticated}" href="/login" class="navBarLink nav-link link-primary">Login</a>
+          <a th:unless="${isAuthenticated}" href="/signup" class="navBarLink nav-link link-primary">Sign Up</a>
+            <form th:if="${isAuthenticated}" th:action="@{/logout}" method="post">
+              <button type="submit" class="btn btn-outline-danger btn-sm">Log Out</button>
             </form>
-          </li>
-        </ul>
       </nav>
     </header>
     <main>
-      <h2> All Currently Available Courses</h2>
-      <table class="steelBlueCols">
+<!--      <h2> All Currently Available Courses</h2>-->
+      <table class="table table-hover table-dark caption-top">
+        <caption>All Currently Available Courses</caption>
         <thead>
           <tr>
-            <th>ID</th><th>Name</th><th>Start Date</th><th>End Date</th><th>Max Capacity</th><th>Actions</th>
+            <!--<th>ID</th>--><th>Name</th><th>Start Date</th><th>End Date</th><th>Max Capacity</th><th>Actions</th>
           </tr>
         </thead>
 
         <tbody>
           <tr th:each="course: ${courses}">
-            <td th:text="${course.id}"/>
+<!--            <td th:text="${course.id}"/>-->
             <td th:text="${course.name}"/>
             <td th:text="${#dates.format(course.startDate, 'dd-MM-yyyy')}"/>
             <td th:text="${#dates.format(course.endDate, 'dd-MM-yyyy')}"/>
             <td th:text="${course.maxStudents}"/>
             <td>
-              <a th:href="@{'/courses/edit/' + ${course.id}}" class="action-button" style="background-color: rgb(0,108,232)">Edit</a>
-              <a th:href="@{'/courses/delete/' + ${course.id}}" class="action-button" style="background-color: #e2452b">Delete</a>
+              <a th:href="@{'/courses/edit/' + ${course.id}}" class="btn btn-outline-primary" >Edit</a>
+              <a th:href="@{'/courses/delete/' + ${course.id}}" class="btn btn-danger" >Delete</a>
             </td>
           </tr>
         </tbody>
@@ -65,5 +64,6 @@
         <input type="submit" value="Sign Out">
       </form>
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   </body>
 </html>
