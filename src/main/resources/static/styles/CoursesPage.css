@@ -1,11 +1,15 @@
 body {
-    background-color: #181a1c;
+    background-color: #181a1c
+}
+
+nav > a.link-primary {
+    color: rgb(129, 209, 238);
 }
 
 header {
     display: flex;
     align-items: center;
-    background-color: #555555;
+    /*background-color: #555555;*/
     position: absolute;
     top: 0;
     left: 0;
@@ -17,6 +21,7 @@ header img {
     max-height: 40px;
     height: 95%;
     padding-left: 10px;
+    float: left;
 }
 
 ul.navBar {
@@ -31,38 +36,28 @@ li {
     margin: .3em 1em;
 }
 
-.navBarLink {
-    color: rgb(129, 209, 238);
-    text-decoration: none;
-    transition: 0.3s;
-    font: 15px "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-    border-bottom: 0 solid;
-}
-
 li>form {
     font-size: 15px;
     display: inline;
     padding: 0;
 }
 
-button.navBarLink {
-    color: rgb(129, 209, 238);
-    text-decoration: none;
-    font-size: 1.03em;
-    padding: 0;
+.navBarLink {
+    margin-bottom: 2px;
     transition: 0.3s;
     border-bottom: 0 solid;
 }
 
+
 .currentEndpoint {
     color: rgb(58, 245, 65);
     transition: 0.3s;
-    border-bottom: 1px solid;
+    border-bottom: 2px solid;
 }
 
-.navBarLink:hover, .currentEndpoint:hover {
+nav>a.link-primary:hover, .currentEndpoint:hover {
     color: rgb(114, 255, 255);
-    border-bottom: 1px solid rgb(129, 209, 238) !important;
+    /*border-bottom: 1px solid rgb(129, 209, 238) !important;*/
 
 }
 
@@ -75,45 +70,49 @@ h2 {
     color: #e8e6e3;
     text-decoration-thickness: 0.2em;
     text-decoration-color: #398AA4;
-    margin: 0 auto;
+    margin: 0 auto auto 4px;
 }
 
-table.steelBlueCols {
-    border: 4px solid #555555;
-    background-color: #555555;
-    max-width: 100%;
-    width: 100%;
-    height: 100%;
+a {
+    text-decoration: none;
+}
+
+.table {
+    color: rgba(129, 209, 238, 90%);
+}
+
+td {
+    max-font-size: 30%;
     text-align: center;
-    border-collapse: collapse;
-    margin:1em auto;
-}
-table.steelBlueCols td, table.steelBlueCols th {
-    border: 1px solid #555555;
-    padding: 5px 10px;
-}
-table.steelBlueCols tbody td {
-    font-size: 1.15rem;
-    color: #FFFFFF;
-}
-table.steelBlueCols td:nth-child(even) {
-    background: #398AA4;
-}
-table.steelBlueCols thead {
-    background: #398AA4;
-    border-bottom: 10px solid #398AA4;
-}
-table.steelBlueCols thead th {
-    font-size: 1rem;
-    font-weight: bold;
-    color: #FFFFFF;
-    text-align: left;
-    border-left: 2px solid #398AA4;
-}
-table.steelBlueCols thead th:first-child {
-    border-left: none;
 }
 
+th {
+    text-align: center;
+}
+
+.btn-outline-primary {
+    color: rgba(129, 209, 238, 90%);
+    border-color: rgba(129, 209, 238, 90%);
+}
+
+.btn-outline-primary:hover {
+    background-color: rgba(129, 209, 238, 100%);
+    color: #fff;
+    border-color: rgba(129, 209, 238, 100%);
+}
+
+h2.form-heading {
+    text-align: center;
+}
+
+.logout-form {
+    padding: 0;
+    align-self: center;
+}
+
+form.logout-form button {
+    align-self: center;
+}
 .action-button {
     display:inline-block;
     padding:0.5em 1.2em;
@@ -134,10 +133,9 @@ table.steelBlueCols thead th:first-child {
 }
 
 form {
-    margin: 0;
+    margin: 0 0 0 4px;
     max-width: 400px;
     padding: 1em .7em .5em 0;
-    font: 13px "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
 
 
