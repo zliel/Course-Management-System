@@ -20,9 +20,9 @@
             </nav>
         </header>
         <main>
-            <h2 class="display-5">Log In</h2>
-            <form method="post" th:action="@{/login}" >
-                <label for="username" class="form-label">Username: </label> <input type="text" id="username" name="username" class="form-control" required/>
+            <h2 class="display-5 form-heading">Log In</h2>
+            <form method="post" th:action="@{/login}" class="container justify-content-center">
+                <label for="username" class="form-label">Username: </label> <input type="text" id="username" name="username" class="form-control col-md-6" required/>
                 <br>
                 <label for="password" class="form-label">Password: </label> <input type="password" id="password" name="password" class="form-control" required>
                 <br>
