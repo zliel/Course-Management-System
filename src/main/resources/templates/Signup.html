@@ -3,36 +3,38 @@
     <head>
         <meta charset="UTF-8">
         <title>Sign Up</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <link rel="stylesheet" th:href="@{/styles/CoursesPage.css}"/>
     </head>
     <body>
-        <header>
-            <img th:src="@{/images/logo.png}" alt="A-plus logo">
-            <nav class="navBarContainer">
-                <ul class="navBar">
-                    <li><a href="/" class="navBarLink">Home</a></li>
-                    <li><a href="/allcourses" class="navBarLink">All Courses</a></li>
-                    <li><a href="/login" class="navBarLink">Login</a></li>
-                </ul>
+        <header class="bg-dark">
+            <img th:src="@{/images/logo.png}" alt="A-plus logo" class="img-fluid align-self-center">
+            <nav class="nav container justify-content-center">
+
+                    <a href="/" class=" navBarLink nav-link link-primary">Home</a>
+                    <a href="/allcourses" class="navBarLink nav-link link-primary">All Courses</a>
+                    <a href="/login" class="navBarLink nav-link link-primary">Login</a>
             </nav>
         </header>
         <main>
-            <h2>Sign Up</h2>
+            <h2 class="display-5">Sign Up</h2>
             <form method="post" th:action="@{/users/new}" th:object="${user}">
-                <label for="username">Username: </label> <input type="text" th:field="*{username}" id="username" required/>
+                <label for="username" class="form-label">Username: </label> <input type="text" th:field="*{username}" id="username" class="form-control" required/>
                 <br>
-                <label for="password">Password: </label> <input type="password" th:field="*{password}" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number, one uppercase and lowercase letter, and at least 8 or more characters" required>
+                <label for="password" class="form-label">Password: </label> <input type="password" th:field="*{password}" id="password" class="form-control" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number, one uppercase and lowercase letter, and at least 8 or more characters" required>
                 <br>
-                <label for="schoolName">School Name: </label>
-                <select id="schoolName" th:field="*{schoolName}">
+                <label for="schoolName" class="form-label">School Name: </label>
+                <select id="schoolName" th:field="*{schoolName}" class="form-select">
                     <option th:each="school : ${schools}" th:value="${school.id}" th:text="${school.name}"></option>
                 </select>
                 <br><br>
-                <input type="submit" value="Submit!" class="action-button" style="background-color: #88D5E9; border-color: lightseagreen"/>
+                <input type="submit" value="Submit!" class="btn btn-dark" style="background-color: #30626c; border-color: lightseagreen"/>
             </form>
 
             <h4 style="color: white">Don't see your school in the list?</h4>
-            <a th:href="@{/schools/new}">Click this link to add a new school to the list!</a>
+            <a th:href="@{/schools/new}" class="link-primary">Click this link to add a new school to the list!</a>
+
         </main>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     </body>
 </html>
