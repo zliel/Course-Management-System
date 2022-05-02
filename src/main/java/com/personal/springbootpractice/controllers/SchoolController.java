@@ -3,6 +3,7 @@ package com.personal.springbootpractice.controllers;
 import com.personal.springbootpractice.models.School;
 import com.personal.springbootpractice.repositories.CourseRepository;
 import com.personal.springbootpractice.repositories.SchoolRepository;
+import com.personal.springbootpractice.repositories.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,10 +16,12 @@ public class SchoolController {
 
     final SchoolRepository schoolRepository;
     final CourseRepository courseRepository;
+    final UserRepository userRepository;
 
-    public SchoolController(SchoolRepository schoolRepository, CourseRepository courseRepository) {
+    public SchoolController(SchoolRepository schoolRepository, CourseRepository courseRepository, UserRepository userRepository) {
         this.schoolRepository = schoolRepository;
         this.courseRepository = courseRepository;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("schools/new")
@@ -50,6 +53,13 @@ public class SchoolController {
                             .log("Course Deletion")
                             .doOnEach(System.out::println)
                             .flatMap(courseRepository::delete)
+                            .then(Mono.just(s));
+                })
+                .flatMap(s -> {
+                    return userRepository.findAllBySchoolName(s.getName())
+                            .log("User Deletion")
+                            .doOnEach(System.out::println)
+                            .flatMap(userRepository::delete)
                             .then(Mono.just(s));
                 })
                 .log("Deleting School")
