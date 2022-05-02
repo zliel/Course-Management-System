@@ -1,6 +1,7 @@
 package com.personal.springbootpractice.controllers;
 
 import com.personal.springbootpractice.models.School;
+import com.personal.springbootpractice.repositories.CourseRepository;
 import com.personal.springbootpractice.repositories.SchoolRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,10 +13,12 @@ import reactor.core.publisher.Mono;
 @Controller
 public class SchoolController {
 
-    final SchoolRepository repository;
+    final SchoolRepository schoolRepository;
+    final CourseRepository courseRepository;
 
-    public SchoolController(SchoolRepository repository) {
-        this.repository = repository;
+    public SchoolController(SchoolRepository schoolRepository, CourseRepository courseRepository) {
+        this.schoolRepository = schoolRepository;
+        this.courseRepository = courseRepository;
     }
 
     @GetMapping("schools/new")
@@ -26,18 +29,33 @@ public class SchoolController {
 
     @PostMapping("schools/new")
     public Mono<String> createNewSchool(@ModelAttribute(value="school") School newSchool) {
-        return repository.save(newSchool).then(Mono.just("redirect:/signup"));
+        return schoolRepository.save(newSchool).then(Mono.just("redirect:/signup"));
     }
 
     @GetMapping("schools/delete")
     public Mono<String> deleteSchool(Model model) {
         model.addAttribute("schoolModel", new School());
-        model.addAttribute("schools", repository.findAll().sort());
+        model.addAttribute("schools", schoolRepository.findAll().sort());
         return Mono.just("Delete-School");
     }
 
     @PostMapping("schools/delete")
     public Mono<String> deleteSchool(@ModelAttribute(value="schoolModel") School school) {
-        return repository.deleteById(school.getId()).then(Mono.just("redirect:/schools/delete"));
+        System.out.println(school);
+        return schoolRepository.findById(school.getId())
+                .log("School Search")
+                .doOnEach(System.out::println)
+                .flatMap(s -> {
+                    return courseRepository.findAllBySchoolName(s.getName())
+                            .log("Course Deletion")
+                            .doOnEach(System.out::println)
+                            .flatMap(courseRepository::delete)
+                            .then(Mono.just(s));
+                })
+                .log("Deleting School")
+                .doOnEach(System.out::println)
+                .flatMap(schoolRepository::delete)
+                .then(Mono.just("redirect:/schools/delete"));
+
     }
 }
