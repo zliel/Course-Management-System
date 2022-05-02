@@ -24,7 +24,7 @@
                 <br>
                 <label for="schoolName" class="form-label">School Name: </label>
                 <select id="schoolName" th:field="*{schoolName}" class="form-select">
-                    <option th:each="school : ${schools}" th:value="${school.id}" th:text="${school.name}"></option>
+                    <option th:each="school : ${schools}" th:value="${school.name}" th:text="${school.name}"></option>
                 </select>
                 <br><br>
                 <input type="submit" value="Submit!" class="btn btn-dark" style="background-color: #30626c; border-color: lightseagreen"/>
