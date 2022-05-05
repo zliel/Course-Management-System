@@ -30,13 +30,13 @@ public class SchoolRestController {
         return schoolRepository.findAll();
     }
 
-    @GetMapping("/api/schools/{id}")
+    @GetMapping("/api/schools/id={id}")
     @ApiOperation(value = "Retrieves a school by its id")
     public Mono<School> getSchoolById(@PathVariable("id") String id) {
         return schoolRepository.findById(id);
     }
 
-    @GetMapping("/api/schools/{name}")
+    @GetMapping("/api/schools/name={name}")
     @ApiOperation(value = "Retrieves a school by its name")
     public Mono<School> getSchoolByName(@PathVariable("name") String name) {
         return schoolRepository.findByName(name);

@@ -25,13 +25,13 @@ public class UserRestController {
         return repository.findAll();
     }
 
-    @GetMapping("/api/users/{id}")
+    @GetMapping("/api/users/id={id}")
     @ApiOperation(value = "Retrieves user by Id", response = User.class)
     public Mono<User> getUserById(@PathVariable("id") String id) {
         return repository.findById(id);
     }
 
-    @GetMapping("/api/users/{schoolName}")
+    @GetMapping("/api/users/school={schoolName}")
     @ApiOperation(value = "Retrieves users by the entered school name")
     public Flux<User> getUsersBySchoolName(@PathVariable("schoolName") String schoolName) {
         return repository.findAllBySchoolName(schoolName);
