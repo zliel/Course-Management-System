@@ -1,7 +1,6 @@
 package com.personal.springbootpractice;
 
 import com.personal.springbootpractice.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
@@ -13,17 +12,20 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @EnableWebFluxSecurity
 public class WebSecurityConfig {
 
-    @Autowired
+    final
     UserRepository userRepository;
+
+    public WebSecurityConfig(UserRepository userRepository) { this.userRepository = userRepository; }
 
     @Bean
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
-        http.authorizeExchange()
-                .pathMatchers("/courses/delete/**", "/courses/edit/**", "/courses/new/**", "/users/delete/**", "/users/delete", "/schools/delete", "/schools/delete/**")
+        http.csrf().disable()
+                .authorizeExchange()
+                .pathMatchers("/users/delete", "/users/delete/**", "/schools/delete", "/schools/delete/**", "/api/schools/delete/**", "/api/users/**", "/api/courses")
                 .hasRole("ADMIN")
                 .and()
             .authorizeExchange()
-                .pathMatchers("/allcourses")
+                .pathMatchers("/allcourses", "/courses/**", "/api/courses/school=**", "/api/courses/new/**", "/swagger-ui/*", "/swagger-ui.html", "/webjars/**", "/v2/**", "/swagger-resources/**")
                 .hasAnyRole("USER", "ADMIN")
                 .and()
             .authorizeExchange()

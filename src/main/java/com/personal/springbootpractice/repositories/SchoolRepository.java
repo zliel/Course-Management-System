@@ -8,4 +8,5 @@ import reactor.core.publisher.Mono;
 
 public interface SchoolRepository extends ReactiveCrudRepository<School, String> {
     Mono<School> findById(String id);
+    Mono<School> findByName(String name);
 }

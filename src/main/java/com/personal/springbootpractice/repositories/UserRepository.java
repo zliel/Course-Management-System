@@ -11,4 +11,5 @@ public interface UserRepository extends ReactiveCrudRepository<User, Long> {
     Mono<User> findUserByUsername(String username);
     Mono<Boolean> existsUserByUsername(String username);
     Flux<User> findAllBySchoolName(String schoolName);
+    Mono<User> findById(String id);
 }
