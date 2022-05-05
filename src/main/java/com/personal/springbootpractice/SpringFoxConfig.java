@@ -15,17 +15,19 @@ import springfox.documentation.spring.web.plugins.Docket;
 public class SpringFoxConfig {
     @Bean
     public Docket api() {
-        ApiInfo apiInfo = new ApiInfoBuilder()
-                .contact(new Contact("Zackary Liel", "https://github.com/zliel", "z_liel@u.pacific.edu"))
-                .title("Course Management System")
-                .description("This is a system to keep track of courses in a user's school.")
-                .build();
-
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.personal.springbootpractice").and(RequestHandlerSelectors.withClassAnnotation(RestController.class)))
                 .paths(PathSelectors.any())
                 .build()
-                .apiInfo(apiInfo);
+                .apiInfo(getApiInfo());
+    }
+
+    public ApiInfo getApiInfo() {
+        return new ApiInfoBuilder()
+                .contact(new Contact("Zackary Liel", "https://github.com/zliel", "z_liel@u.pacific.edu"))
+                .title("Course Management System")
+                .description("This is a system to keep track of courses in a user's school.")
+                .build();
     }
 }
