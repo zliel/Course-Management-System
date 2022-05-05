@@ -28,22 +28,22 @@ public class CourseRestController {
         return repository.findAll();
     }
 
-    @GetMapping("/api/courses/{id}")
+    @GetMapping("/api/courses/id={id}")
     @ApiOperation(value = "Retrieves a course by its id")
     public Mono<Course> getCourseById(@PathVariable("id") Long id) {
         return repository.findById(id);
     }
 
-    @GetMapping("/api/courses/{schoolName}")
+    @GetMapping("/api/courses/school={schoolName}")
     @ApiOperation(value = "Retrieves all courses from a given school")
     public Flux<Course> getCoursesBySchoolName(@PathVariable("schoolName") String schoolName) {
         return repository.findAllBySchoolName(schoolName);
     }
 
-    @PostMapping("/api/courses/new/{id}")
-    @ApiOperation(value = "Adds a new course with the given id (currently with default values)")
-    public Mono<String> addNewCourse(@PathVariable("id") Long id) {
-        Course courseToAdd = new Course("Newly Made Course!", new Date(), Date.from(Instant.now().plus(90, ChronoUnit.DAYS)), 30, "UCSD");
+    @PostMapping("/api/courses/new/{name}")
+    @ApiOperation(value = "Adds a new course with the given name (currently with default values)")
+    public Mono<String> addNewCourse(@PathVariable("name") String name) {
+        Course courseToAdd = new Course(name, new Date(), Date.from(Instant.now().plus(90, ChronoUnit.DAYS)), 30, "UCSD");
 
         return repository.save(courseToAdd).then(Mono.just("Successfully Added!"));
     }
