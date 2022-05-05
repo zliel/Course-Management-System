@@ -13,7 +13,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 @RestController
-@Api(tags = "Course REST Controller")
+@Api(tags = "Courses")
 public class CourseRestController {
 
     final CourseRepository repository;
@@ -50,7 +50,7 @@ public class CourseRestController {
 
     @DeleteMapping("/api/courses/delete/{id}")
     @ApiOperation(value = "Deletes a course by its id")
-    public Mono<String> deleteCourse(@PathVariable Long id) {
+    public Mono<String> deleteCourse(@PathVariable("id") String id) {
         Mono<Course> courseToDelete = repository.findById(id);
 
         return courseToDelete.flatMap(repository::delete)

@@ -11,7 +11,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
-@Api(tags = "User REST Controller")
+@Api(tags = "Users")
 public class UserRestController {
 
     final UserRepository repository;
