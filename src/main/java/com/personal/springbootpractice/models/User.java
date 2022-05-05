@@ -2,7 +2,6 @@ package com.personal.springbootpractice.models;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.ToString;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -17,7 +16,6 @@ import java.util.Set;
 
 @Data
 @Document
-@ToString
 public class User implements UserDetails {
 
     @Id
