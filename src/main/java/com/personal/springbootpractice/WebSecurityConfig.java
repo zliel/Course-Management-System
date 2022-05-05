@@ -25,7 +25,7 @@ public class WebSecurityConfig {
                 .hasRole("ADMIN")
                 .and()
             .authorizeExchange()
-                .pathMatchers("/allcourses", "/courses/**", "/api/courses/school=**", "/api/courses/new/**", "/swagger-ui/*", "/swagger-ui.html", "/webjars/**", "/v2/**", "/swagger-resources/**")
+                .pathMatchers("/allcourses", "/courses/**", "/api/courses/school=**", "/api/courses/new/**", "/api/courses/edit", "/api/courses/delete/**", "/swagger-ui/*", "/swagger-ui.html", "/webjars/**", "/v2/**", "/swagger-resources/**")
                 .hasAnyRole("USER", "ADMIN")
                 .and()
             .authorizeExchange()

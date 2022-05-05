@@ -4,6 +4,7 @@ import com.personal.springbootpractice.models.Course;
 import com.personal.springbootpractice.repositories.CourseRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -11,6 +12,7 @@ import reactor.core.publisher.Mono;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.Optional;
 
 @RestController
 @Api(tags = "Courses")
@@ -46,6 +48,28 @@ public class CourseRestController {
         Course courseToAdd = new Course(name, new Date(), Date.from(Instant.now().plus(90, ChronoUnit.DAYS)), 30, "UCSD");
 
         return repository.save(courseToAdd).then(Mono.just("Successfully Added!"));
+    }
+
+    @PostMapping("/api/courses/edit")
+    @ApiOperation(value = "Edits a course with the provided parameters")
+    public Mono<Course> updateCourse(
+            @RequestParam(value = "id") String id,
+            @RequestParam(value = "name", required = false) Optional<String> newName,
+            @RequestParam(value = "maxStudents", required = false) Optional<Integer> maxStudents,
+            @RequestParam(value = "from", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Optional<Date> fromDate,
+            @RequestParam(value = "to", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Optional<Date> toDate
+    )
+    {
+        return repository.findById(id)
+                .map(course -> {
+                    newName.ifPresent(course::setName);
+                    maxStudents.ifPresent(course::setMaxStudents);
+                    fromDate.ifPresent(course::setStartDate);
+                    toDate.ifPresent(course::setEndDate);
+                    return course;
+                })
+                .flatMap(repository::save)
+                .log("Updating Course");
     }
 
     @DeleteMapping("/api/courses/delete/{id}")
