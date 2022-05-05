@@ -21,11 +21,11 @@ public class WebSecurityConfig {
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
         http.csrf().disable()
                 .authorizeExchange()
-                .pathMatchers("/users/delete", "/users/delete/**", "/schools/delete", "/schools/delete/**", "/api/schools/**", "/api/users/**")
+                .pathMatchers("/users/delete", "/users/delete/**", "/schools/delete", "/schools/delete/**", "/api/schools/delete/**", "/api/users/**", "/api/courses")
                 .hasRole("ADMIN")
                 .and()
             .authorizeExchange()
-                .pathMatchers("/allcourses", "/courses/**", "/api/courses/**", "/swagger-ui/*", "/swagger-ui.html", "/webjars/**", "/v2/**", "/swagger-resources/**")
+                .pathMatchers("/allcourses", "/courses/**", "/api/courses/school=**", "/api/courses/new/**", "/swagger-ui/*", "/swagger-ui.html", "/webjars/**", "/v2/**", "/swagger-resources/**")
                 .hasAnyRole("USER", "ADMIN")
                 .and()
             .authorizeExchange()
