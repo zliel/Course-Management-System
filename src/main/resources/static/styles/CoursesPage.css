@@ -108,6 +108,7 @@ h2.form-heading {
 .logout-form {
     padding: 0;
     align-self: center;
+    /*margin-left: auto; Consider figuring out how to make sure the other links don't get shifted all the way to the left*/
 }
 
 form.logout-form button {
@@ -167,4 +168,13 @@ input:focus{
     -webkit-box-shadow: 0 0 8px #88D5E9;
     box-shadow: 0 0 8px #88D5E9;
     border: 1px solid #88D5E9;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    background-color: #232628;
 }
