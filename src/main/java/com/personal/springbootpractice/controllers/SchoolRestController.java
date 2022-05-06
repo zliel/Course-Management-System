@@ -1,5 +1,6 @@
 package com.personal.springbootpractice.controllers;
 
+import com.personal.springbootpractice.models.Course;
 import com.personal.springbootpractice.models.School;
 import com.personal.springbootpractice.repositories.CourseRepository;
 import com.personal.springbootpractice.repositories.SchoolRepository;
@@ -9,6 +10,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.Optional;
 
 @RestController
 @Api(tags = "Schools")
@@ -48,6 +51,39 @@ public class SchoolRestController {
         return schoolRepository.save(new School(name)).then(Mono.just("Successfully saved!"));
     }
 
+    @PostMapping("/api/schools/edit")
+    @ApiOperation(value = "Edits a school with the provided parameters")
+    public Mono<School> updateSchool(
+            @RequestParam(value = "id") String id,
+            @RequestParam(value = "name", required = false) Optional<String> newName
+    )
+    {
+        return schoolRepository.findById(id)
+                .map(school -> {
+                    newName.ifPresent(school::setName);
+                    return school;
+                })
+                .map(school -> {
+                    newName.ifPresent(name -> {
+                        courseRepository.findAllBySchoolName(school.getName())
+                                .log("Updating Associated Courses")
+                                .map(course -> {
+                                    course.setSchoolName(name);
+                                    return course;
+                                });
+                        userRepository.findAllBySchoolName(school.getName())
+                                .log("Updating Associated Users")
+                                .map(user -> {
+                                    user.setSchoolName(name);
+                                    return user;
+                                });
+                    });
+                    return school;
+                })
+                .flatMap(schoolRepository::save)
+                .log("Updating School");
+    }
+
     @DeleteMapping("/api/schools/delete/{id}")
     @ApiOperation(value = "Removes a school by name, and removes its associated users and courses")
     public Mono<String> deleteSchool(@PathVariable("id") String id) {
@@ -68,7 +104,7 @@ public class SchoolRestController {
                             .flatMap(userRepository::delete)
                             .then(Mono.just(s));
                 })
-                .log("Deleting School")
+                .log("School Deletion")
                 .doOnEach(System.out::println)
                 .flatMap(schoolRepository::delete)
                 .then(Mono.just("Successfully deleted!"));
