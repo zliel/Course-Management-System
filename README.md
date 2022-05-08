@@ -3,7 +3,7 @@ This is a project I'm using to learn about reactive web development with Spring 
 
 **Features**:
 - CRUD for courses, schools and users
-- Authentication with Spring Security (Soon to be OAuth as well)
+- Authentication with Spring Security
 
 **Tech:**
 - Spring Boot
@@ -11,3 +11,4 @@ This is a project I'm using to learn about reactive web development with Spring 
   - Spring Data MongoDB
   - Spring Security
 - Thymeleaf
+- Bootstrap
