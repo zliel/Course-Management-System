@@ -26,6 +26,10 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
     }
 
+    /**
+     * @param model Passed in automatically by Spring Boot
+     * @return A Mono containing a string which serves the Signup.html page
+     */
     @GetMapping("/signup")
     public Mono<String> signup(Model model) {
         model.addAttribute("isAuthenticated", AuthenticationUtils.isAuthenticated());
@@ -34,7 +38,10 @@ public class UserController {
         return AuthenticationUtils.authenticateEndpoint("Signup");
     }
 
-
+    /**
+     * @param newUser Passed in automatically by Thymeleaf from the form on the Signup.html page
+     * @return A Mono containing a string which redirects the user to the Login.html page
+     */
     @PostMapping("/users/new")
     public Mono<String> createNewUser(@ModelAttribute(value="user") User newUser) {
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
@@ -46,12 +53,20 @@ public class UserController {
         });
     }
 
+    /**
+     * @param model Passed in automatically by Spring Boot
+     * @return A Mono containing a string which serves the User-Delete.html page
+     */
     @GetMapping("/users/delete")
     public Mono<String> userDeletionPage(Model model) {
         model.addAttribute("user", new User());
         return Mono.just("user-delete");
     }
 
+    /**
+     * @param user Passed in automatically by Thymeleaf from the form on the User-Delete.html page
+     * @return A Mono containing a string which redirects the user to the home page
+     */
     @PostMapping("/users/delete/")
     public Mono<String> deleteUser(@ModelAttribute(value="user") User user) {
         String username = user.getUsername();

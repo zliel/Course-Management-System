@@ -24,24 +24,40 @@ public class CourseRestController {
         this.repository = repository;
     }
 
+    /**
+     * @return A Flux containing all courses in the database
+     */
     @GetMapping("/api/courses")
     @ApiOperation(value = "Retrieves all courses")
     public Flux<Course> getAllCourses() {
         return repository.findAll();
     }
 
+    /**
+     * @param id The id of the course to be retrieved
+     * @return A Mono containing the course if it exists
+     */
     @GetMapping("/api/courses/id={id}")
     @ApiOperation(value = "Retrieves a course by its id")
-    public Mono<Course> getCourseById(@PathVariable("id") Long id) {
+    public Mono<Course> getCourseById(@PathVariable("id") String id) {
         return repository.findById(id);
     }
 
+    /**
+     * @param schoolName The name of a school, which retrieves all courses associated with the provided school
+     * @return A Flux containing all the courses associated with the provided school
+     */
     @GetMapping("/api/courses/school={schoolName}")
     @ApiOperation(value = "Retrieves all courses from a given school")
     public Flux<Course> getCoursesBySchoolName(@PathVariable("schoolName") String schoolName) {
         return repository.findAllBySchoolName(schoolName);
     }
 
+    /** This method will be changed with the next update
+     * @deprecated
+     * @param name
+     * @return
+     */
     @PostMapping("/api/courses/new/{name}")
     @ApiOperation(value = "Adds a new course with the given name (currently with default values)")
     public Mono<String> addNewCourse(@PathVariable("name") String name) {
@@ -50,6 +66,14 @@ public class CourseRestController {
         return repository.save(courseToAdd).then(Mono.just("Successfully Added!"));
     }
 
+    /**
+     * @param id The id of the course to be edited
+     * @param newName The new name to give the edited course
+     * @param maxStudents The new number of max students to give the edited course
+     * @param fromDate The new starting date for the edited course
+     * @param toDate The new ending date for hte edited course
+     * @return A Mono containing the updated course
+     */
     @PostMapping("/api/courses/edit")
     @ApiOperation(value = "Edits a course with the provided parameters")
     public Mono<Course> updateCourse(
@@ -72,12 +96,17 @@ public class CourseRestController {
                 .log("Updating Course");
     }
 
+    /**
+     * @param id The id of the course to be deleted
+     * @return A Mono containing a string with either a success or error message
+     */
     @DeleteMapping("/api/courses/delete/{id}")
     @ApiOperation(value = "Deletes a course by its id")
     public Mono<String> deleteCourse(@PathVariable("id") String id) {
         Mono<Course> courseToDelete = repository.findById(id);
 
         return courseToDelete.flatMap(repository::delete)
-                            .then(Mono.just("Successfully Deleted!"));
+                            .then(Mono.just("Successfully Deleted!"))
+                            .onErrorReturn("Error: Couldn't delete course");
     }
 }
