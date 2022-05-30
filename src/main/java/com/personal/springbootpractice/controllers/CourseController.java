@@ -31,8 +31,8 @@ public class CourseController {
     /**
      * This method retrieves all courses from the database and adds them to the returned view
      *
-     * @param model - The view to which the courses are added
-     * @return A string containing the name of the corresponding HTML file to which the user will be sent to
+     * @param model - Passed in automatically by Spring Boot
+     * @return A Mono containing a string which serves the Courses.html page
      */
     @GetMapping("/allcourses")
     public Mono<String> allCourses(Model model, @AuthenticationPrincipal User user) {
@@ -45,13 +45,12 @@ public class CourseController {
 
     /**
      * This method saves a new course from the values input into the form on the "/allcourses" page
-     * @param course This Course object is created using Thymeleaf from the values input into the "/allcourses" new Course form
-     * @return A redirect to the "/allcourses" page
+     * @param course Passed in automatically by Thymeleaf from the form on the Courses.html page
+     * @return A Mono containing a string which redirects the user to the Courses.html page
      */
     @PostMapping("/courses/new")
     public Mono<String> newCourse(@ModelAttribute(value="course") Course course, @AuthenticationPrincipal User user) {
         course.setSchoolName(user.getSchoolName());
-        System.out.println(course);
         // Solution to the issue of getting form data from POST form: https://stackoverflow.com/questions/17669212/send-datas-from-html-to-controller-in-thymeleaf
         // Solution to the date type mismatch error: https://stackoverflow.com/questions/53188464/spring-boot-date-conversion-from-form
 
@@ -62,9 +61,9 @@ public class CourseController {
     /**
      * This method takes the user to a page to edit a course found by its ID
      *
-     * @param id The ID of the course to be edited
-     * @param model The model to which the found course's attributes are added
-     * @return A string containing the name of the corresponding HTML file to which the user will be sent to
+     * @param id The id of the course to be edited
+     * @param model Passed in automatically by Spring Boot
+     * @return A Mono containing a string which serves the Edit-Course.html page
      */
     @GetMapping("/courses/edit/{id}")
     public Mono<String> editCourse(@PathVariable("id") String id, Model model) {
@@ -77,8 +76,8 @@ public class CourseController {
 
     /**
      * This method handles deleting courses using their IDs (Will likely be changed to a DELETE mapping)
-     * @param id The ID of the course to be deleted
-     * @return A redirect to the "/allcourses" page
+     * @param id The id of the course to be deleted
+     * @return A Mono containing a string which redirects the user to the Courses.html page
      */
     @GetMapping("/courses/delete/{id}")
     public Mono<String> deleteCourse(@PathVariable("id") String id) {

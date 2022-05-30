@@ -27,30 +27,52 @@ public class SchoolRestController {
         this.userRepository = userRepository;
     }
 
+    /**
+     * @return A Flux containing all schools in the database
+     */
     @GetMapping("/api/schools")
     @ApiOperation(value = "Retrieves all schools")
     public Flux<School> getAllSchools() {
         return schoolRepository.findAll();
     }
 
+    /**
+     * @param id The id of the school to be retrieved
+     * @return A Mono containing the school if it exists
+     */
     @GetMapping("/api/schools/id={id}")
     @ApiOperation(value = "Retrieves a school by its id")
     public Mono<School> getSchoolById(@PathVariable("id") String id) {
         return schoolRepository.findById(id);
     }
 
+    /**
+     * @param name The name of the school to be retrieved
+     * @return A Mono containing the school if it exists
+     */
     @GetMapping("/api/schools/name={name}")
     @ApiOperation(value = "Retrieves a school by its name")
     public Mono<School> getSchoolByName(@PathVariable("name") String name) {
         return schoolRepository.findByName(name);
     }
 
+    /**
+     * @param name The name of the school to be added
+     * @return A Mono containing a string with either a success or error message
+     */
     @PostMapping("/api/schools/new/{name}")
     @ApiOperation(value = "Creates a new school with the provided name")
-    public Mono<String> addSchool(@PathVariable("name") String name) {
-        return schoolRepository.save(new School(name)).then(Mono.just("Successfully saved!"));
+    public Mono<String> newSchool(@PathVariable("name") String name) {
+        return schoolRepository.save(new School(name))
+                .then(Mono.just("Successfully saved!"))
+                .onErrorReturn("Error: Could not save school");
     }
 
+    /**
+     * @param id The id of the school to be edited
+     * @param newName The new name to give the school
+     * @return A Mono containing the edited school
+     */
     @PostMapping("/api/schools/edit")
     @ApiOperation(value = "Edits a school with the provided parameters")
     public Mono<School> updateSchool(
@@ -84,29 +106,30 @@ public class SchoolRestController {
                 .log("Updating School");
     }
 
+    /**
+     * @param id The id of the school to delete
+     * @return A Mono containing a string with either a success or error message
+     */
     @DeleteMapping("/api/schools/delete/{id}")
     @ApiOperation(value = "Removes a school by name, and removes its associated users and courses")
     public Mono<String> deleteSchool(@PathVariable("id") String id) {
         return schoolRepository.findById(id)
                 .log("School Search")
                 .doOnEach(System.out::println)
-                .flatMap(s -> {
-                    return courseRepository.findAllBySchoolName(s.getName())
-                            .log("Course Deletion")
-                            .doOnEach(System.out::println)
-                            .flatMap(courseRepository::delete)
-                            .then(Mono.just(s));
-                })
-                .flatMap(s -> {
-                    return userRepository.findAllBySchoolName(s.getName())
-                            .log("User Deletion")
-                            .doOnEach(System.out::println)
-                            .flatMap(userRepository::delete)
-                            .then(Mono.just(s));
-                })
+                .flatMap(s -> courseRepository.findAllBySchoolName(s.getName())
+                        .log("Course Deletion")
+                        .doOnEach(System.out::println)
+                        .flatMap(courseRepository::delete)
+                        .then(Mono.just(s)))
+                .flatMap(s -> userRepository.findAllBySchoolName(s.getName())
+                        .log("User Deletion")
+                        .doOnEach(System.out::println)
+                        .flatMap(userRepository::delete)
+                        .then(Mono.just(s)))
                 .log("School Deletion")
                 .doOnEach(System.out::println)
                 .flatMap(schoolRepository::delete)
-                .then(Mono.just("Successfully deleted!"));
+                .then(Mono.just("Successfully deleted!"))
+                .onErrorReturn("Error: Could not delete school");
     }
 }
